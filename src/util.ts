@@ -658,6 +658,11 @@ export function isInTestMode(): boolean {
   return process.env[CODEQL_ACTION_TEST_MODE] === "true";
 }
 
+export function skipStatus(): boolean {
+  return process.env["CODEQL_ACTION_SKIP_STATUS"] === "true";
+}
+
+
 /**
  * @returns true if the action should generate a conde-scanning config file
  * that gets passed to the CLI.

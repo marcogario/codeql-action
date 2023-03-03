@@ -19,6 +19,7 @@ import {
   isHTTPError,
   isInTestMode,
   parseMatrixInput,
+  skipStatus,
   UserError,
 } from "./util";
 import { getWorkflowPath } from "./workflow";
@@ -511,10 +512,11 @@ export async function sendStatusReport<S extends StatusReportBase>(
   const statusReportJSON = JSON.stringify(statusReport);
   core.debug(`Sending status report: ${statusReportJSON}`);
   // If in test mode we don't want to upload the results
-  if (isInTestMode()) {
+  if (isInTestMode() || skipStatus()) {
     core.debug("In test mode. Status reports are not uploaded.");
     return true;
   }
+
 
   const nwo = getRequiredEnvParam("GITHUB_REPOSITORY");
   const [owner, repo] = nwo.split("/");
